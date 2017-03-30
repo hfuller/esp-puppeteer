@@ -1,13 +1,18 @@
 from __future__ import print_function
-from flask import Flask, jsonify, redirect, request
+from flask import Flask, jsonify, redirect, request, render_template
 import sqlite3
 import json
 
 app = Flask(__name__)
+app_name = "ESP Puppeteer"
 
 @app.route('/')
 def redir():
-    return redirect("/static/index.html")
+    return redirect("/devices")
+
+@app.route('/devices')
+def render_devices():
+    return render_template('table.html', app_name=app_name, title="Devices")
 
 @app.route('/<firmware>.ino.<platform>.bin')
 def update_check(firmware, platform):
